@@ -1,6 +1,6 @@
 library(shiny)
 
-ui <- navbarPage("Observaciones atípicas e influyentes", fluid = T,
+ui <- navbarPage("Observaciones atípicas e influyentes", fluid = T, theme = 'bootstrap.css',
                  tabPanel("Regresión simple",
                           fluidRow(
                             column(2,
