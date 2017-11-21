@@ -3,48 +3,57 @@ library(shiny)
 ui <- navbarPage("Observaciones atípicas e influyentes", fluid = T, theme = 'bootstrap.css',
                  tabPanel("Regresión simple",
                           fluidRow(
-                            column(4,
+                            column(2,
                               wellPanel(
-                                numericInput('n_simple', 'Tamaño de muestra', value = 30, step = 10, min = 10, max = 1000),
-                                numericInput('x_simple', 'Variable explicativa (X)', value = 50, step = 1),
-                                numericInput('y_simple', 'Variable respuesta (Y)', value = 275, step = 5)
+                                h3('Parámetros'),
+                                numericInput('n_simple', 'n', value = 30, step = 10, min = 10, max = 1000),
+                                numericInput('x_simple', 'X', value = 50, step = 1),
+                                numericInput('y_simple', 'Y', value = 275, step = 5)
                               )
                             ),
-                            column(8,
-                              plotOutput('grafica_simple')
-                            )
-                          ),
-                          br(),
-                          fluidRow(
-                            column(8, offset = 4,
-                              h4('Leverage'),
-                              verbatimTextOutput('leverage_simple'),
-                              h4('DFBETAS'),
-                              verbatimTextOutput('dfbetas_simple'),
-                              h4('DFFITS'),
-                              verbatimTextOutput('dffits_simple'),
-                              h4('COVRATIO'),
-                              verbatimTextOutput('covratio_simple')
+                            column(6, plotOutput('dispersion_simple')),
+                            column(4,
+                                   h4('Leverage'),
+                                   verbatimTextOutput('leverage_simple'),
+                                   h4('DFBETAS'),
+                                   verbatimTextOutput('dfbetas_simple'),
+                                   h4('DFFITS'),
+                                   verbatimTextOutput('dffits_simple'),
+                                   h4('COVRATIO'),
+                                   verbatimTextOutput('covratio_simple')
                             )
                           )
                  ),
                  
-                 tabPanel("Cobertura",
+                 tabPanel("Regresión múltiple",
                           fluidRow(
-                            column(4,
-                                wellPanel(
-                                  numericInput('prob', 'Probabilidad', value = 0.5, step = 0.01, min = 0.01, max = 0.99),
-                                  numericInput('n2', 'Tamaño de muestra', value = 30, step = 1, min = 2),
-                                  numericInput('a2', 'Confianza', value = 0.95, step = 0.005, min = 0.5, max = 0.995),
-                                  numericInput('m', 'Número de muestras', value = 250, step = 50, min = 50),
-                                  actionButton('nsample', 'Nueva muestra')
+                            column(2,
+                                   wellPanel(
+                                     h3('Parámetros'),
+                                     numericInput('n_multiple', 'n', value = 30, step = 10, min = 10, max = 1000),
+                                     numericInput('x1_multiple', 'X1', value = 30, step = 5),
+                                     numericInput('x2_multiple', 'X2', value = 50, step = 10),
+                                     numericInput('y_multiple', 'Y', value = 420, step = 25)
                                 )
                             ),
-                            column(8,
-                                   h3('Cobertura'),
-                                   textOutput('cobertura', container = h4)
+                            column(6, plotOutput('dispersion_multiple')),
+                            column(4,
+                                   h4('Leverage'),
+                                   verbatimTextOutput('leverage_multiple'),
+                                   h4('DFBETAS'),
+                                   verbatimTextOutput('dfbetas_multiple'),
+                                   h4('DFFITS'),
+                                   verbatimTextOutput('dffits_multiple'),
+                                   h4('COVRATIO'),
+                                   verbatimTextOutput('covratio_multiple')
                             )
+                          ),
+                          br(),
+                          fluidRow(
+                            column(4, offset = 2,
+                                   sliderInput('theta', 'Azimut', value = 30, step = 1, min = 0, max = 360,
+                                               animate = animationOptions(interval = 100, loop = TRUE))),
+                            column(4, sliderInput('phi', 'Colatitud', value = 20, step = 20, min = -40, max = 40))
                           )
                  )
 )
-
